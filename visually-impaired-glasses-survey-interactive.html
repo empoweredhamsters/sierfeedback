@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visually Impaired Glasses Feedback Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0 auto;
+            max-width: 800px;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label, textarea {
+            display: block;
+            margin-bottom: 10px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Visually Impaired Glasses Feedback Survey</h1>
+    <form id="surveyForm">
+        <label for="q1">1. What was your initial impression of the device?</label>
+        <textarea id="q1" name="q1" required></textarea>
+
+        <label for="q2">2. What was the most helpful aspect of it?</label>
+        <textarea id="q2" name="q2" required></textarea>
+
+        <label for="q3">3. What do you wish was better about the device?</label>
+        <textarea id="q3" name="q3" required></textarea>
+
+        <label for="q4">4. What would your dream device be able to do?</label>
+        <textarea id="q4" name="q4" required></textarea>
+
+        <label for="q5">5. How much would you pay for a device that had the features you want?</label>
+        <textarea id="q5" name="q5" required></textarea>
+
+        <label for="q6">6. Do you have any other comments or suggestions?</label>
+        <textarea id="q6" name="q6"></textarea>
+
+        <button type="submit">Submit and Download Responses</button>
+    </form>
+
+    <script>
+        document.getElementById('surveyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let responses = '';
+            const questions = [
+                "1. What was your initial impression of the device?",
+                "2. What was the most helpful aspect of it?",
+                "3. What do you wish was better about the device?",
+                "4. What would your dream device be able to do?",
+                "5. How much would you pay for a device that had the features you want?",
+                "6. Do you have any other comments or suggestions?"
+            ];
+
+            questions.forEach((question, index) => {
+                const answer = document.getElementById(`q${index + 1}`).value;
+                responses += `${question}\n${answer}\n\n`;
+            });
+
+            const blob = new Blob([responses], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'survey_responses.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>
